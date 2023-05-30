@@ -4,6 +4,7 @@ import { HomePage } from './pages/HomePage';
 import {AboutPage} from './pages/AboutPage'
 import {ErrorPage} from './pages/ErrorPage'
 import {Navbar} from './components/Navbar'
+import { ProjectDetailsPage } from './components/ProjectDetailsPage';
 import { ProjectsPage } from './pages/ProjectsPage';
 import { HomePageWithNavigate } from './components/HomePageWithNavigate';
 import { Routes, Route } from 'react-router-dom';
@@ -17,7 +18,7 @@ function App() {
       <Route path="/" element={<HomePageWithNavigate />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/projects" element={<ProjectsPage projects={projectsData} />} />
-
+      <Route path="/projects/:projectId" element={<ProjectDetailsPage />}></Route>
       <Route path="*" element={<ErrorPage />} />
     </Routes>
     </div>

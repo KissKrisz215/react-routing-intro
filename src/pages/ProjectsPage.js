@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import {Link , useParams } from "react-router-dom";
 
 export function ProjectsPage(props){
     const [projects, setProjects] = useState([]);
@@ -13,7 +14,9 @@ export function ProjectsPage(props){
         {projects.map((project) => {
             return(
             <div key={project._id}>
-              <h3>{project.name}</h3>
+              <Link to={`/projects/${project._id}`}>
+                {project.name}
+              </Link>
               <p>{project.technologies}</p>
             </div>
             );
