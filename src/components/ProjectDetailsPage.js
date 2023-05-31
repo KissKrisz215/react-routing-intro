@@ -1,13 +1,33 @@
+import { useState, useEffect } from 'react';
 import projectsData from '../projects-data.json'
 import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
+
+const apiUrl = "https://rickandmortyapi.com/api/character";
 
 export function ProjectDetailsPage(){
-    const {projectId} = useParams();
-    console.log("ProjectId", projectId);
+   const [foundProject, setFoundProject] = useState(null);
 
-    const foundProject = projectsData.find((project) => {
-        return project._id === projectId;
-    })
+    const {projectId} = useParams();
+
+    useEffect(() => {
+        // const projects = projectsData.find((project) => {
+        //     return project._id === projectId;
+        // })
+      
+        // if(projects){
+        //   setFoundProject(projects);
+        // }
+
+        const characterData = axios.get(apiUrl)
+        .then((response) => {
+            const responseData = response.data.results;
+            const character = responseData.filter((char) => char.id == projectId)
+            setFoundProject(character)
+            console.log(character);
+        })
+
+    }, [])
 
     return(
        <div>
@@ -15,8 +35,14 @@ export function ProjectDetailsPage(){
          {!foundProject && <p>Project Not Found!</p>}
          {foundProject && 
           <>
-            <h2>{foundProject.name}</h2>
-            <p>{foundProject.description}</p>
+            {foundProject.map((project) => {
+                return(
+                <div key={project.id}>
+                    <p>{project.name}</p>
+                </div>
+                );
+            })}
+            {/* <p>{foundProject.description}</p> */}
           </>
          }
          <Link to="/projects">Back</Link>
